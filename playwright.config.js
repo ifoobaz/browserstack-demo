@@ -43,7 +43,7 @@ const config = {
     retries: process.env.CI ? 3 : 0,
 
     /* Opt out of parallel tests on CI. */
-    workers: 4,
+    workers: 6,
 
     reporter: [['list', { printSteps: true }]],
 
