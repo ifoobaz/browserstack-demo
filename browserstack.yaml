@@ -1,0 +1,107 @@
+# https://gist.githubusercontent.com/prateeksabs/0532c79795463d5806234a320880d911/raw/b11d658a458da040d1d8672c9fa22afc353a1fea/browserstack.yml
+
+# =============================
+# Set BrowserStack Credentials
+# =============================
+# Add your BrowserStack userName and accessKey here or set BROWSERSTACK_USERNAME and
+# BROWSERSTACK_ACCESS_KEY as env variables
+userName: ${BROWSERSTACK_USERNAME}
+accessKey: ${BROWSERSTACK_ACCESS_KEY}
+
+# Set `framework` of your test suite. Example, `testng`, `cucumber`, `cucumber-testng`
+framework: playwright
+
+# =============================================================================================================================
+# Parallels per Platform
+# =============================================================================================================================
+# The number of parallel threads to be used for each platform set.
+# BrowserStack's SDK runner will select the best strategy based on the configured value
+#
+# Example 1 - If you have configured 3 platforms and set `parallelsPerPlatform` as 2, a total of 6 (2 * 3) parallel threads
+# will be used on BrowserStack
+#
+# Example 2 - If you have configured 1 platform and set `parallelsPerPlatform` as 5, a total of 5 (1 * 5) parallel threads
+# will be used on BrowserStack
+parallelsPerPlatform: 2
+
+# =============================================================================================================================
+# Platforms (Browsers / Devices to test)
+# =============================================================================================================================
+# Platforms object contains all the browser / device combinations you want to test on.
+
+platforms:
+  - os: Windows
+    osVersion: 11
+    browserName: Chrome
+    browserVersion: latest
+    # ===============================================
+    # Chrome Browser Specific Capabilities (OPTIONAL)
+    # ===============================================
+    chromeOptions:
+      args:
+        - incognito
+        - --start-maximized
+
+  - os: Windows
+    osVersion: 11
+    browserName: playwright-firefox
+    browserVersion: latest
+    firefox:
+      acceptDownloads: false
+
+# =============================================================================================================================
+# BrowserStack Reporting
+# =============================================================================================================================
+#Set 'projectName' to the name of your project.
+projectName: "BrowserStart Demo #2"
+buildName: "BrowserStart Demo #2"
+
+# buildIdentifier` is a unique id to differentiate every execution that gets appended to buildName.
+# Choose your buildIdentifier format from the available expressions:
+# ${BUILD_NUMBER} (Default): Generates an incremental counter with every execution
+# ${DATE_TIME}: Generates a Timestamp with every execution. Eg. 05-Nov-19:30
+buildIdentifier: '[${DATE_TIME}]'
+
+# =============================================================================================================================
+# BrowserStack Local (For localhost, staging/private websites)
+# =============================================================================================================================
+
+# Set browserStackLocal to true if your website under test is not accessible publicly over the internet
+browserstackLocal: true # <boolean> (Default true)
+# Options to be passed to BrowserStack local in-case of advanced configurations
+browserStackLocalOptions:
+  acceptInsecureCerts: true
+
+# =============================================================================================================================
+# Debugging features
+# =============================================================================================================================
+debug: true # <boolean> # Set to true if you need screenshots for every selenium command ran
+networkLogs: true # <boolean> Set to true to enable HAR logs capturing
+consoleLogs: verbose # <string> Remote browser's console debug levels to be printed (Default: errors)
+# Available options are `disable`, `errors`, `warnings`, `info`, `verbose` (Default: errors)
+
+# =============================================================================================================================
+# TEST CONFIGURATION CAPABILITIES
+# =============================================================================================================================
+video: true
+
+# =============================================================================================================================
+# MOBILE SPECIFIC CAPABILITIES
+# =============================================================================================================================
+#
+## Set the screen orientation of mobile device.
+#deviceOrientation: portrait # select between portrait/landscape
+## Required if you want to simulate the custom network condition.
+#customNetwork: 1000 #download speed (kbps), upload speed (kbps), latency (ms), packet loss (%)
+## Required if you want to simulate different network conditions.
+#networkProfile: 2g-gprs-good #(select between multiple options)
+
+# =============================================================================================================================
+# TEST OBSERVABILITY
+# =============================================================================================================================
+
+# Test Observability is an intelligent test reporting & debugging product. It collects data using the SDK.
+# Visit observability.browserstack.com to see your test reports and insights. To disable test observability,
+# specify `testObservability: false` in the key below.
+# Read about what data is collected at https://www.browserstack.com/docs/test-observability/references/terms-and-conditions
+testObservability: false

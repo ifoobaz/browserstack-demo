@@ -1,26 +1,12 @@
-import { devices } from '@playwright/test';
-import path from 'path';
-import dotenv from 'dotenv';
-
-dotenv.config({
-    path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV || 'development'}`),
-});
-
-const buildName = `Browserstack Demo Scenario #1 - ${(new Date()).getDay()}-${(new Date()).getMonth()} ${(new Date()).getHours()}:${(new Date()).getMinutes()}`;
-
 /**
  * @see https://playwright.dev/docs/test-configuration
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
-    testDir: './tests/',
+    testDir: './tests',
 
     globalSetup: require.resolve('./global-setup'),
     globalTeardown: require.resolve('./global-teardown'),
-
-    // proxy: {
-    //   server: `${process.env.PROXY_PROTOCOL}://${process.env.PROXY_HOST}:${process.env.PROXY_PORT}`,
-    // },
 
     /* Maximum time one test can run for. */
     timeout: 120000,
@@ -33,9 +19,6 @@ const config = {
         timeout: 120000,
     },
 
-    /* Run tests in files in parallel */
-    fullyParallel: true,
-
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
 
@@ -43,7 +26,9 @@ const config = {
     retries: process.env.CI ? 3 : 0,
 
     /* Opt out of parallel tests on CI. */
-    workers: 4,
+    workers: 6,
+
+    fullyParallel: true,
 
     reporter: [['list', { printSteps: true }]],
 
@@ -66,57 +51,11 @@ const config = {
 
     /* Configure projects for major browsers */
     projects: [
-        // -- Local Projects --
         {
-            name: 'local.chrome',
+            name: 'chrome',
             use: {
-                ...devices['Desktop Chrome'],
-            },
-        },
-
-        {
-            name: 'local.firefox',
-            use: {
-                ...devices['Desktop Firefox'],
-            },
-        },
-
-        {
-            name: 'local.safari',
-            use: {
-                ...devices['Desktop Safari'],
-            },
-        },
-
-        // -- BrowserStack Projects --
-        {
-            name: 'browserstack.chrome',
-            use: {
-                // ...devices['Desktop Chrome'],
-                headless: true,
-
-                browserStackOptions: {
-                    buildName,
-                    browser: 'chrome',
-                    os: 'Windows',
-                    os_version: '10',
-                    browser_version: 'latest',
-                },
-            },
-        },
-        {
-            name: 'browserstack.firefox',
-            use: {
-                // ...devices['Desktop Firefox'],
-                headless: true,
-
-                browserStackOptions: {
-                    buildName,
-                    browser: 'playwright-firefox',
-                    os: 'Windows',
-                    os_version: '10',
-                    browser_version: 'latest',
-                },
+                browserName: 'chromium',
+                channel: 'chrome',
             },
         },
     ],
