@@ -1,0 +1,4 @@
+!.eslintrc.js
+nightwatch.conf.js
+jest.config.js
+public/**/*
